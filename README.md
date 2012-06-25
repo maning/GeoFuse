@@ -15,10 +15,17 @@ Configure PostgreSQL
 * create a database and install PostGIS
 * create the dummy and metadata tables found in createtabs.sql
 * add map layers (polygons/lines/points) which will later be used for thematics 
+* Edit the ``tomcat_dir/webapps/GeoFuse/classes/prpoerties/database.properties`` file.
 
 Configure GeoServer
 -------------------
-
+* Create a new postgis datastore
+* Create a new layer.  
+* Click the Configure new SQL view...
+* View name ``linker1``
+* SQL statement ``select a.*,the_geom from %linktab% a,%maptab% b where a.col0 = b.%mapcol%``
+* Click the ``Guess parameters from SQL``.  In the name {explain more the Deafult value parameters).
+* Create another layer for linker2.
 
 To View Thematic Maps:
 ----------------------
@@ -39,14 +46,27 @@ To View Thematic Maps:
 To Customize:
 -------------
 
-* To change the Google Key, add or delete colors and ranges, etc., edit
-the properties file at:
+``tomcat_dir/webapps/GeoFuse/classes/properties/
+├── database.properties
+├── dynamic_linker.properties
+├── thematic.properties``
+
+
+Adding new postgis table
+
+Adding new background layer for printing
+
+Adding new colorscheme
+
 
 <tomcat dir>/webapps/geothematics/WEB-INF/classes/properties/thematic.properties
 
 NOTE: the ColorNames and Colors should have equal number of items, otherwise
       no color choices will appear in the Colors list of the web page.
 
- License
- -------
- Released under GPL.
+Deleting data
+
+
+License
+-------
+Released under GPL.
