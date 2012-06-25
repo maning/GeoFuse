@@ -13,9 +13,18 @@ To Install
 Configure PostgreSQL
 --------------------
 * create a database and install PostGIS
+
+``createdb licloud``
+``pgsql -f /usr/share/postgresql/8.4/contrib/postgis-1.5/postgis.sql licloud``
+``psql -f /usr/share/postgresql/8.4/contrib/postgis-1.5/postgis.sql licloud``
+``psql -f /usr/share/postgresql/8.4/contrib/postgis-1.5/spatial_ref_sys.sql licloud``
+
 * create the dummy and metadata tables found in createtabs.sql
-* add map layers (polygons/lines/points) which will later be used for thematics 
-* Edit the ``tomcat_dir/webapps/GeoFuse/classes/prpoerties/database.properties`` file.
+``psql -f createtabs.sql licloud``
+``psql -f deltemp.sql licloud``
+
+* add map layers (polygons/lines/points) which will later be used for thematics. 
+* Edit the ``tomcat_dir/webapps/GeoFuse/classes/properties/database.properties`` file to use your newly created postgis database
 
 Configure GeoServer
 -------------------
@@ -27,16 +36,9 @@ Configure GeoServer
 * Click the ``Guess parameters from SQL``.  In the name {explain more the Deafult value parameters).
 * Create another layer for linker2.
 
-To View Thematic Maps:
+To View Geofuse
 ----------------------
-* Register polygon layers into the Geoserver Repository
-* **View the polygon layers via the url:**
-
-   http://<host>:<port>/geothematics/showtheme?layer=<namespace>:<layer name>
-
-   example:
-
-   http://localhost:8080/geothematics/showtheme?layer=topp:states
+* In your browser, go to ``http://localhost:8080/geofuse/``
 
    NOTE: This application will try to get only metric (numeric) fields to
       display in the Thematic attribute list. For numeric ID fileds 
@@ -47,9 +49,9 @@ To Customize:
 -------------
 
 ``tomcat_dir/webapps/GeoFuse/classes/properties/
-├── database.properties
-├── dynamic_linker.properties
-├── thematic.properties``
+database.properties
+dynamic_linker.properties
+thematic.properties``
 
 
 Adding new postgis table
